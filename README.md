@@ -22,8 +22,8 @@ var test = {
 			marks: 3
 		},
 		{
-			no: "2",
-			qtext:"Who is Prime Minister of India?",
+			no: "2", 
+			qtext:"Who is the Prime Minister of India?",
 			options:[
 				{text:"Sonia Gandhi"},
 				{text:"Narendra Modi"},
