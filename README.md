@@ -2,7 +2,7 @@
 This is a quiz framework created using ReactJS. 
 
 Following is a sample JSON data model which could be posted to create the quiz:
-
+```json
 var test = {
 		name: "Sample Test",
 		description: "This is a sample test paper to demonstrate the ReactJS UI design by components.",
@@ -47,7 +47,7 @@ var test = {
 		},
 		]
 	};	
+```	
+The above Test JSON object could then be passed to Test Component like following:
 	
-	The above Test JSON object could then be passed to Test Component like following:
-	
-	React.render( <Test details={test}/>, document.getElementById( "content" ) );
+React.render( <Test details={test}/>, document.getElementById( "content" ) );
