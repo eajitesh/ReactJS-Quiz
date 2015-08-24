@@ -50,4 +50,4 @@ var test = {
 ```	
 The above Test JSON object could then be passed to Test Component like following:
 	
-React.render( <Test details={test}/>, document.getElementById( "content" ) );
+React.render( &lt;Test details={test}/&gt;, document.getElementById( "content" ) );
