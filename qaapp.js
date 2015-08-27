@@ -8,6 +8,7 @@ var QuestionPaper = React.createClass({
 		handleSubmitted: function(event) {
 			var result = {totalscore: this.state.totalscore};
 			this.props.onSubmitted( result );			
+			clearInterval(this.interval);
 		},
 		tick: function() {
       if( this.state.timeElapsed > 0 ) {
