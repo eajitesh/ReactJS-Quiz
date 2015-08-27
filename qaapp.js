@@ -119,7 +119,7 @@ var QuestionPaper = React.createClass({
 	  render: function() {
 	    return (
 	        <div className="list-group">
-					<div className="list-group-item active">Time Left</div>
+					<div className="list-group-item active">Time Left (In Minutes)</div>
 					<div className="list-group-item"><h1>{this.props.timeElapsed}</h1></div>
 				</div>
 	      );
