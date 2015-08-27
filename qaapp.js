@@ -1,6 +1,6 @@
 var QuestionPaper = React.createClass({
 		getInitialState: function() {
-			return {totalscore : 0};
+			return {totalscore : 0, timeElapsed: this.props.timeAllotted};
 		},
 		handleChange: function(score) {
 			this.setState({totalscore: this.state.totalscore + score});
@@ -9,6 +9,21 @@ var QuestionPaper = React.createClass({
 			var result = {totalscore: this.state.totalscore};
 			this.props.onSubmitted( result );			
 		},
+		tick: function() {
+      if( this.state.timeElapsed > 0 ) {
+        this.setState({timeElapsed: ((60*this.state.timeElapsed - 1)/60).toFixed(2)});  
+        this.props.onTimeChange( this.state.timeElapsed );
+      } else {
+        var result = {totalscore: this.state.totalscore};
+			  this.props.onSubmitted( result );			
+      }
+    },
+    componentDidMount: function() {
+      this.interval = setInterval(this.tick, 1000);
+    },
+    componentWillUnmount: function() {
+      clearInterval(this.interval);
+    },
 		render: function(){
 			var questionAnswers = this.props.questions.map(function(question){
 				return(
@@ -99,13 +114,27 @@ var QuestionPaper = React.createClass({
 			);
 		}
 	});
+	
+	var Stopwatch = React.createClass({
+	  render: function() {
+	    return (
+	        <div className="list-group">
+					<div className="list-group-item active">Time Left</div>
+					<div className="list-group-item"><h1>{this.props.timeElapsed}</h1></div>
+				</div>
+	      );
+	  }
+	});
 
 	var Test = React.createClass({
 		getInitialState: function() {
-			return {totalscore : 0, testSubmitted: false};
+			return {totalscore : 0, testSubmitted: false, timeElapsed: this.props.details.time};
 		},
 		handleChange: function(result) {
 			this.setState({totalscore: result.totalscore, testSubmitted: true});
+		},
+		handleStopwatch: function( timeElapsed ) {
+		  this.setState({timeElapsed: timeElapsed});
 		},
 		render: function(){						
 			var totalmarks = 0;
@@ -121,10 +150,11 @@ var QuestionPaper = React.createClass({
 						<tr>
 							<td className="col-md-9">
 							<QuestionPaper questions={this.props.details.questions} applyNegativeMarking={this.props.details.applyNegativeMarking}
-							 onSubmitted={this.handleChange}/>
+							 onSubmitted={this.handleChange} onTimeChange={this.handleStopwatch} timeAllotted={this.props.details.time}/>
 							 </td>
 							 <td className="col-md-3">
-							<Scorecard score={this.state.totalscore} testSubmitted={this.state.testSubmitted} percentage={Math.round(this.state.totalscore*100/totalmarks)}/>					
+							  <Stopwatch timeElapsed={this.state.timeElapsed} />
+							  <Scorecard score={this.state.totalscore} testSubmitted={this.state.testSubmitted} percentage={Math.round(this.state.totalscore*100/totalmarks)}/>					
 							</td>
 						</tr>
 					</table>
